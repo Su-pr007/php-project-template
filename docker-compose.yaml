@@ -6,8 +6,9 @@ services:
     ports:
       - ${HOST_PORT}:80
     volumes:
-      - ./www:/var/www/
+      - .${DOCUMENT_ROOT}:/var/www/
       - ./nginx/configs:/etc/nginx/templates
+      - ./nginx/logs:/var/log/nginx/
     environment:
       - GLOBAL_DOMAIN=example.com
       - SERVER_PORT=80
@@ -18,7 +19,7 @@ services:
   php-fpm:
     image: php:8.2-fpm-alpine
     volumes:
-      - ./www:/var/www/
+      - .${DOCUMENT_ROOT}:/var/www/
     extra_hosts:
       - "example.com:172.17.0.1"
     restart: always
